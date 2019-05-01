@@ -32,9 +32,9 @@ namespace wfa_es
 
         private Vessel ConvertHitToVessel(IHit<Vessel> hit)
         {
-            Func<IHit<Vessel>, Vessel> func = (XPackBuildInformation) =>
+            Func<IHit<Vessel>, Vessel> func = (x) =>
              {
-                 
+
                  return hit.Source;
              };
 
