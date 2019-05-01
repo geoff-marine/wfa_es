@@ -23,7 +23,10 @@ namespace wfa_es
         ESClient eSClient;
         public List<Vessel> GetAll()
         {
-            var hits = eSClient.Current.Search<Vessel>(s => s.Query(q => q.MatchAll())).Hits;
+            var hits = eSClient.Current.Search<Vessel>(s => s
+            .From(0)
+            .Size(5)
+            .Query(q => q.MatchAll())).Hits;
 
             List<Vessel> typedList = hits.Select(hit => ConvertHitToVessel(hit)).ToList();
 
