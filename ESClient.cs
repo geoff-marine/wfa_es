@@ -17,8 +17,11 @@ namespace wfa_es
 
             _settings = new ConnectionSettings(node);
             _settings.DefaultIndex("/vesselname/allnames/");
+            
+            Current = new ElasticClient(_settings);
+            Current.Map<Vessel>(m => m.AutoMap());
 
-            var client = new ElasticClient(_settings);
+
         }
 
     }

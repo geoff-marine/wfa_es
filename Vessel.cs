@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nest;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,27 @@ namespace wfa_es
         public string Lbp { get; set; }
         public string TonRef { get; set; }
         public string PowerMain { get; set; }
-    }
+
+        ESClient eSClient;
+        public List<Vessel> GetAll()
+        {
+            var hits = eSClient.Current.Search<Vessel>(s => s.Query(q => q.MatchAll())).Hits;
+
+            List<Vessel> typedList = hits.Select(hit => ConvertHitToVessel(hit)).ToList();
+
+            return typedList;
+        }
+
+        private Vessel ConvertHitToVessel(IHit<Vessel> hit)
+        {
+            Func<IHit<Vessel>, Vessel> func = (XPackBuildInformation) =>
+             {
+                 
+                 return hit.Source;
+             };
+
+            return func.Invoke(hit);
+        }
+
+    } 
 }
